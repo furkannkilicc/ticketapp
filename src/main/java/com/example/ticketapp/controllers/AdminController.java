@@ -1,26 +1,31 @@
 package com.example.ticketapp.controllers;
-
 import com.example.ticketapp.entities.Admin;
-import com.example.ticketapp.repos.AdminRepository;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.example.ticketapp.services.AdminService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
-    private final AdminRepository adminRepository;
+    private AdminService adminService;
+    public AdminController(AdminService adminService) {
+            this.adminService=adminService;
+    }
+    @GetMapping
+    public List<Admin>gelAllAdmins(@RequestParam Optional<Long> adminId){ return AdminService.getAllAdmins(adminId);
+    }
+    @GetMapping("/tickets/{ticketId}")
+    public List<Admin> GetTicketDetails(@RequestParam Optional<Long> ticketId ){
+        return AdminService.getTicketDetails(ticketId);
+    }
 
-    public AdminController(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
+
+    @DeleteMapping("/{adminId}")
+    public  void  deleteAdmin(@PathVariable Long adminId){
+        adminService.deleteAdmin(adminId);
     }
-    @GetMapping("/admin")
-    public List<Admin>gelAllAdmins(){ return adminRepository.findAll();
-    }
-    @GetMapping("/{adminId}")
-    public Optional<Admin> getOneAdmin(@PathVariable Long adminId){
-        return adminRepository.findById(adminId);    }
+
 
 
 //    @GetMapping("/{userId}")
@@ -43,9 +48,6 @@ public class AdminController {
 //        else{
 //            return  null;}
 //    }
-    @DeleteMapping("/{adminId}")
-    public  void  deleteAdmin(@PathVariable Long adminId){
-        adminRepository.deleteById(adminId);
-    }
+
 
 }

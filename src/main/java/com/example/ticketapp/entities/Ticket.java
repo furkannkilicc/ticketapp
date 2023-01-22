@@ -14,14 +14,14 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long ticket_id;
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id" , nullable = false)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
      User user;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seatNo")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seatNo",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Seat seat;
