@@ -48,12 +48,12 @@ public class AdminController {
             return null;
     }
 
-    @PutMapping("{/userid}")
-    public  User UpdateUser(@PathVariable Long userid, @RequestParam  UserUpdateRequest updateuser){
-        return  adminService.updateUserWithid(userid,updateuser);
-
-
-    }
+//    @PutMapping("{/userid}")
+//    public  User UpdateUser(@PathVariable Long userid, @RequestParam  UserUpdateRequest updateuser){
+//        return  adminService.updateUserWithid(userid,updateuser);
+//
+//
+//    }
 
 
 }

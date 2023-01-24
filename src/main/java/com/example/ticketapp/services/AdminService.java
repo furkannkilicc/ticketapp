@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.web.servlet.function.ServerResponse.ok;
+
 @Service
 public class AdminService {
     AdminRepository adminRepository;
@@ -43,44 +45,34 @@ public class AdminService {
         return ticketService.getAllTickets(ticketId);
     }
 
-//    public List<Object> (Optional<Long> ticketId) {
-//        if(ticketId.isPresent())
-//            List<Object> seats = seatRepository.findSeatById(ticketId);
-//        List<Object> routes = routeRepository.findRouteById(ticketId);
-//        List<Object> tickets=  ticketRepository.findTicketById(ticketId);
-//        List<Object> result = new ArrayList<>();
-//        result.addAll(seats);
-//        result.addAll(tickets);
-//        result.addAll(routes);
-//        return result;
-//    }
-
 
     public Admin deleteAdmin(Long adminId) {
         try {
             adminRepository.deleteById(adminId);
         } catch (Exception e) { //user zaten yok, db'den empty result gelmiş
 
-                   System.out.println("Admin" + adminId + "yok!")
+                      System.out.println("Admin" + adminId + "yok!");
         }
+        return (Admin) ok();
+
     }
 
 
-    public User updateUserWithid(Long userid, UserUpdateRequest updateuser) {
-        Optional<User> user = userService.getOneUserWithId(userid);
-        if (user.isPresent()){
-            User toUpdate = user.get();
-            toUpdate.setUsername(updateuser.getUsername());
-            toUpdate.setRole(updateuser.getRole());
-            toUpdate.setTicket(updateuser.getTicket());
-            toUpdate.setRoute(updateuser.getRoute());
-            toUpdate.setSeat(updateuser.getSeat());
-            userService.userRepository.save(toUpdate);
-            return  toUpdate;
+//    public User updateUserWithid(Long userid, UserUpdateRequest updateuser) {
+//        Optional<User> user = userService.getOneUserWithId(userid);
+//        if (user.isPresent()){
+//            User toUpdate = user.get();
+//            toUpdate.setUsername(updateuser.getUsername());
+//            toUpdate.setRole(updateuser.getRole());
+//            toUpdate.setTicket(updateuser.getTicket());
+//            toUpdate.setRoute(updateuser.getRoute());
+//            toUpdate.setSeat(updateuser.getSeat());
+//            userService.userRepository.save(toUpdate);
+//            return  toUpdate;
+//
 
-
-        }
-
-    }
+//        }
+//
+//    }
 }
 
