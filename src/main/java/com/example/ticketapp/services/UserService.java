@@ -5,6 +5,7 @@ import com.example.ticketapp.repos.RouteRepository;
 import com.example.ticketapp.repos.SeatRepository;
 import com.example.ticketapp.repos.TicketRepository;
 import com.example.ticketapp.repos.UserRepository;
+import com.example.ticketapp.requsts.UserUpdateRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,5 +57,15 @@ public class UserService {
         return userRepository.findById(userId);
 
     }
+
+    public void deleteById(Long userid) {
+        try {
+            userRepository.deleteById(userid);
+        } catch (Exception ex) {
+            System.out.println(ex+"kayit edilemedi");
+        }
+    }
+
+
 }
 

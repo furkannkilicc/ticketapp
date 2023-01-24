@@ -1,17 +1,12 @@
 package com.example.ticketapp.services;
 
 import com.example.ticketapp.entities.Admin;
-import com.example.ticketapp.entities.Ticket;
+import com.example.ticketapp.entities.User;
+import com.example.ticketapp.reponses.AdminResponse;
 import com.example.ticketapp.repos.*;
+import com.example.ticketapp.requsts.UserUpdateRequest;
 import com.example.ticketapp.responses.TicketResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,20 +14,24 @@ import java.util.Optional;
 public class AdminService {
     AdminRepository adminRepository;
     TicketService ticketService;
+    UserService userService;
 
 
-    public AdminService(AdminRepository adminRepository, TicketService ticketService)
+    public AdminService(AdminRepository adminRepository, TicketService ticketService,UserService userService )
 
     {
 
         this.adminRepository = adminRepository;
         this.ticketService = ticketService;
+        this.userService= userService;
 
     }
 
-    public List<Admin> getAllAdmins(Optional<Long> adminId) {
-        if(adminId.isPresent())
-            return  adminRepository.findByAdminId(adminId.get());
+    public AdminResponse findAdminRole(String role) {
+        return adminRepository.findByRole(role);
+    }
+
+    public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
 
 
@@ -57,12 +56,31 @@ public class AdminService {
 //    }
 
 
-    public void deleteAdmin(Long adminId) {
+    public Admin deleteAdmin(Long adminId) {
         try {
             adminRepository.deleteById(adminId);
         } catch (Exception e) { //user zaten yok, db'den empty result gelmiş
-            System.out.println("Admin" + adminId + "yok!");
+
+                   System.out.println("Admin" + adminId + "yok!")
         }
     }
 
+
+    public User updateUserWithid(Long userid, UserUpdateRequest updateuser) {
+        Optional<User> user = userService.getOneUserWithId(userid);
+        if (user.isPresent()){
+            User toUpdate = user.get();
+            toUpdate.setUsername(updateuser.getUsername());
+            toUpdate.setRole(updateuser.getRole());
+            toUpdate.setTicket(updateuser.getTicket());
+            toUpdate.setRoute(updateuser.getRoute());
+            toUpdate.setSeat(updateuser.getSeat());
+            userService.userRepository.save(toUpdate);
+            return  toUpdate;
+
+
+        }
+
+    }
 }
+
