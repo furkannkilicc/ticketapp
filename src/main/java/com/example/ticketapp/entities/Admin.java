@@ -14,5 +14,8 @@ public class Admin {
     String password;
 
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "rolename")
+    Role role;
 
 }

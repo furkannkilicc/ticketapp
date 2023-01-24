@@ -16,11 +16,15 @@ public class User {
     String username;
     String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @OneToMany (fetch = FetchType.EAGER)
     @JoinColumn(name = "ticket_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     Ticket ticket;
 
+        @OneToOne(fetch = FetchType.EAGER)
+        @JoinTable(name = "rolename")
+        Role role;
 
 
 }

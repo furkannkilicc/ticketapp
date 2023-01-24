@@ -8,11 +8,12 @@ import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
-@Table(name = "Ticket")
+@Table(name = "ticket")
 @Data
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
+
     Long ticket_id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id" , nullable = false)
@@ -25,7 +26,11 @@ public class Ticket {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     Seat seat;
-    String status;
-    String route;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "routename" )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Route route;
+
+
 
 }

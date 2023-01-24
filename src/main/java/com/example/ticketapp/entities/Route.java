@@ -6,12 +6,12 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "Route")
+@Table(name = "route")
 @Data
 public class Route {
     @Id
     Long routeId;
-    String fRoute;
-    String toRoute;
+    String routename;
+
 
 }
