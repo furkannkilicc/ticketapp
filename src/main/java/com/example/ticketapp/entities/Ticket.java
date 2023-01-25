@@ -12,6 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Data
 public class Ticket {
     @Id
+    @Column(name = "ticket_id")
     Long ticket_id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id" , nullable = false)

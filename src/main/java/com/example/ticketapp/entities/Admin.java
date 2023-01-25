@@ -9,6 +9,7 @@ import lombok.Data;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "admin_id")
     Long id;
     String username;
     String password;
