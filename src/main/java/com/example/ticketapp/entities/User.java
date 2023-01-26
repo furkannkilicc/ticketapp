@@ -1,6 +1,7 @@
 package com.example.ticketapp.entities;
 
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;

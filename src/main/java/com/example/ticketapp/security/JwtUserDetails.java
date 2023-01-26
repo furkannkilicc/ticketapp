@@ -3,7 +3,6 @@ package com.example.ticketapp.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import com.example.ticketapp.entities.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,10 +29,12 @@ public class JwtUserDetails implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static JwtUserDetails create(Optional<User> user) {
+    public static JwtUserDetails create(User user) {
         List<GrantedAuthority> authoritiesList = new ArrayList<>();
         authoritiesList.add(new SimpleGrantedAuthority("user"));
-        return new JwtUserDetails(user.get().getId(), user.get().getUsername(), user.get().getPassword(), authoritiesList);
+        authoritiesList.add(new SimpleGrantedAuthority("admin"));
+
+        return new JwtUserDetails(user.getId(), user.getUsername(), user.getPassword() ,authoritiesList);
     }
 
     @Override
